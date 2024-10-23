@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joaogouveia89.tikodog.R
 import io.github.joaogouveia89.tikodog.core.presentation.TikoDogTextInput
+import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
 
 @Composable
 fun TikoDogPasswordInput(
@@ -51,18 +52,19 @@ fun TikoDogPasswordInput(
                 Icon(
                     imageVector = iconImage,
                     contentDescription = description,
-                    tint = Color.Black,
+                    tint = TikoGray,
                 )
             }
         },
         visualTransformation = if (isVisible)
             VisualTransformation.None
         else
-            PasswordVisualTransformation()
+            PasswordVisualTransformation(),
+        borderColor = Color.White
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFF9BB8E5)
 @Composable
 private fun TikoDogPasswordInputPreview() {
     TikoDogPasswordInput(

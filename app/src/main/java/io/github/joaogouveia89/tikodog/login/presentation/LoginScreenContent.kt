@@ -25,6 +25,7 @@ import io.github.joaogouveia89.tikodog.R
 import io.github.joaogouveia89.tikodog.core.presentation.TikoDogTextInput
 import io.github.joaogouveia89.tikodog.login.presentation.components.TikoDogPasswordInput
 import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
+import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
 
 @Composable
 fun LoginScreenContent(
@@ -63,11 +64,12 @@ fun LoginScreenContent(
             endIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
-                    tint = Color.Black,
+                    tint = TikoGray,
                     contentDescription = null
                 )
             },
-            onChangeValue = {}
+            onChangeValue = {},
+            borderColor = Color.White
         )
         TikoDogPasswordInput(
             modifier = Modifier

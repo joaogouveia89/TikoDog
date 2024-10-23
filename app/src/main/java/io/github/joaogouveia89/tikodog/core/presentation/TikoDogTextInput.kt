@@ -1,14 +1,15 @@
 package io.github.joaogouveia89.tikodog.core.presentation
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +21,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
+import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
 
 @Composable
 fun TikoDogTextInput(
@@ -29,6 +32,7 @@ fun TikoDogTextInput(
     onChangeValue: (String) -> Unit,
     initialValue: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
+    borderColor: Color,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     endIcon: @Composable (() -> Unit)? = null
 ) {
@@ -42,13 +46,26 @@ fun TikoDogTextInput(
             value = it
             onChangeValue(it)
         },
-        colors = TextFieldDefaults.colors().copy(
+        colors = OutlinedTextFieldDefaults.colors().copy(
             unfocusedContainerColor = Color.Transparent,
-            focusedTextColor = Color.Black
+            focusedTextColor = Color.Black,
+            focusedIndicatorColor = Color.Black,
+            unfocusedIndicatorColor = borderColor // border color
         ),
+        shape = RoundedCornerShape(8.dp),
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
-        label = { Text(text = label) },
-        placeholder = { Text(text = hint) },
+        label = {
+            Text(
+                text = label,
+                color = TikoGray
+            )
+        },
+        placeholder = {
+            Text(
+                text = hint,
+                color = TikoGray
+            )
+        },
         trailingIcon = endIcon,
         visualTransformation = visualTransformation
     )
@@ -57,12 +74,15 @@ fun TikoDogTextInput(
 @Preview(showBackground = true)
 @Composable
 private fun TikoDogTextInputPreview() {
-    TikoDogTextInput(
-        modifier = Modifier.padding(20.dp),
-        label = "Name",
-        hint = "Enter your name",
-        onChangeValue = {}
-    )
+    TikoDogTheme {
+        TikoDogTextInput(
+            modifier = Modifier.padding(20.dp),
+            label = "Name",
+            hint = "Enter your name",
+            onChangeValue = {},
+            borderColor = MaterialTheme.colorScheme.primary
+        )
+    }
 }
 
 @Preview(showBackground = true)
@@ -78,6 +98,7 @@ private fun TikoDogTextInputWithIconPreview() {
                 contentDescription = null
             )
         },
+        borderColor = MaterialTheme.colorScheme.primary,
         onChangeValue = {}
     )
 }
