@@ -1,13 +1,12 @@
 package io.github.joaogouveia89.tikodog.login.presentation
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Login
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,10 +21,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joaogouveia89.tikodog.R
+import io.github.joaogouveia89.tikodog.core.presentation.TikoDogButton
 import io.github.joaogouveia89.tikodog.core.presentation.TikoDogTextInput
 import io.github.joaogouveia89.tikodog.login.presentation.components.TikoDogPasswordInput
 import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
 import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
+import io.github.joaogouveia89.tikodog.ui.theme.TikoPurple
 
 @Composable
 fun LoginScreenContent(
@@ -76,6 +77,17 @@ fun LoginScreenContent(
                 .padding(top = 20.dp)
                 .fillMaxWidth(),
             onChangeValue = {}
+        )
+
+        TikoDogButton(
+            modifier = Modifier
+                .padding(top = 80.dp)
+                .align(Alignment.CenterHorizontally),
+            text = "Sign In",
+            trailIcon = Icons.AutoMirrored.Filled.Login,
+            onClick = {},
+            contentColor = Color.White,
+            containerColor = TikoPurple
         )
     }
 }

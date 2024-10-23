@@ -18,7 +18,7 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = TikoPink,
-    secondary = TikoBlue,
+    secondary = TikoPurple,
     tertiary = TikoPurple
 
     /* Other default colors to override
