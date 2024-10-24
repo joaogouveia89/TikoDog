@@ -16,6 +16,7 @@ val Pink40 = Color(0xFF7D5260)
 val TikoPurple = Color(0xFF812578)
 val TikoPink = Color(0xFFFDE0EA)
 val TikoBlue = Color(0xFF9BB8E5)
+val TikoYellow = Color(0xFFFFC800)
 
 val TikoGray = Color(0xFF8190A4)
 val TikoGray2 = Color(0xFFE6EBEE)
