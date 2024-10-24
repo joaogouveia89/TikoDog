@@ -18,6 +18,7 @@ val TikoPink = Color(0xFFFDE0EA)
 val TikoBlue = Color(0xFF9BB8E5)
 
 val TikoGray = Color(0xFF8190A4)
+val TikoGray2 = Color(0xFFE6EBEE)
 
 val backgroundGradient = Brush.linearGradient(
     colors = listOf(

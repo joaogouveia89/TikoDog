@@ -4,4 +4,6 @@
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
     <string name="dog_selection">Dog Selection</string>
+    <string name="dog_breed">Dog Breed</string>
+    <string name="select">Select</string>
 </resources>
