@@ -1,5 +1,7 @@
 package io.github.joaogouveia89.tikodog.ui.theme
 
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -16,3 +18,12 @@ val TikoPink = Color(0xFFFDE0EA)
 val TikoBlue = Color(0xFF9BB8E5)
 
 val TikoGray = Color(0xFF8190A4)
+
+val backgroundGradient = Brush.linearGradient(
+    colors = listOf(
+        TikoPink,
+        TikoBlue
+    ),
+    start = Offset(0f, Float.POSITIVE_INFINITY),
+    end = Offset(Float.POSITIVE_INFINITY, 0f)
+)

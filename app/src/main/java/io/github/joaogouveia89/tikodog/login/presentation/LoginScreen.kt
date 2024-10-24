@@ -5,21 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
-import io.github.joaogouveia89.tikodog.ui.theme.TikoBlue
 import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
-import io.github.joaogouveia89.tikodog.ui.theme.TikoPink
+import io.github.joaogouveia89.tikodog.ui.theme.backgroundGradient
 
-private val loginBackground = Brush.linearGradient(
-    colors = listOf(
-        TikoPink,
-        TikoBlue
-    ),
-    start = Offset(0f, Float.POSITIVE_INFINITY),
-    end = Offset(Float.POSITIVE_INFINITY, 0f)
-)
 
 @Composable
 fun LoginScreen() {
@@ -29,7 +18,7 @@ fun LoginScreen() {
             paddingValues = paddingValues,
             modifier = Modifier
                 .fillMaxSize()
-                .background(loginBackground)
+                .background(backgroundGradient)
         )
     }
 }

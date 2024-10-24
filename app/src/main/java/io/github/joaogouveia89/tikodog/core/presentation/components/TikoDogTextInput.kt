@@ -1,4 +1,4 @@
-package io.github.joaogouveia89.tikodog.core.presentation
+package io.github.joaogouveia89.tikodog.core.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape

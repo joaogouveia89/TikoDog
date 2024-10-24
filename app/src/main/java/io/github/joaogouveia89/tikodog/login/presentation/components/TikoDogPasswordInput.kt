@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joaogouveia89.tikodog.R
-import io.github.joaogouveia89.tikodog.core.presentation.TikoDogTextInput
+import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogTextInput
 import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
 
 @Composable

@@ -21,8 +21,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joaogouveia89.tikodog.R
-import io.github.joaogouveia89.tikodog.core.presentation.TikoDogButton
-import io.github.joaogouveia89.tikodog.core.presentation.TikoDogTextInput
+import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogButton
+import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogTextInput
 import io.github.joaogouveia89.tikodog.login.presentation.components.TikoDogPasswordInput
 import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
 import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
