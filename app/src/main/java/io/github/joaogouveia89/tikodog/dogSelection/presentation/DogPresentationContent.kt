@@ -98,7 +98,7 @@ private fun PanelContent(
             onSelectClick = onDogBreedSelectClick
         )
 
-        DogImage(
+        DogPresentationImage(
             modifier = Modifier
                 .padding(top = 40.dp),
             imageUrl = "",
@@ -148,7 +148,7 @@ private fun TikoDogSelectDogBreed(
 }
 
 @Composable
-fun DogImage(
+fun DogPresentationImage(
     modifier: Modifier = Modifier,
     imageUrl: String,
     isFavorite: Boolean,
