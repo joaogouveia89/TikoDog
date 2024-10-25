@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -59,7 +61,10 @@ fun DogPresentationContent(
     onFavoriteClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(paddingValues)
+        modifier = Modifier
+            .padding(paddingValues)
+            .padding(top = 20.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         TikoDogPanelScreen(
             header = PanelScreenHeader(
@@ -108,7 +113,7 @@ private fun PanelContent(
 
         TikoDogButton(
             modifier = Modifier
-                .padding(top = 40.dp)
+                .padding(vertical = 40.dp)
                 .align(Alignment.CenterHorizontally),
             text = stringResource(R.string.shuffle),
             trailIcon = Icons.Default.Autorenew,

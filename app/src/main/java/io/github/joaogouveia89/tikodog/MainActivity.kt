@@ -11,7 +11,7 @@ import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         setContent {
             TikoDogTheme {
                 MainScreen(

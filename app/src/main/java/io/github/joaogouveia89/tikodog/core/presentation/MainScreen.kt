@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import io.github.joaogouveia89.tikodog.core.navigation.BottomNavigationBar
 import io.github.joaogouveia89.tikodog.core.navigation.NavigationGraph
 
@@ -22,4 +24,10 @@ fun MainScreen(navController: NavHostController) {
             }
         }
     )
+}
+
+@Preview
+@Composable
+private fun MainScreenPreview() {
+    MainScreen(navController = rememberNavController())
 }

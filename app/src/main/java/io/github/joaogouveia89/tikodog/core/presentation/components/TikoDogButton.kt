@@ -2,6 +2,7 @@ package io.github.joaogouveia89.tikodog.core.presentation.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -30,6 +31,7 @@ fun TikoDogButton(
 ) {
     Button(
         modifier = modifier,
+        shape = RoundedCornerShape(77.dp),
         content = {
             Row(
                 modifier = Modifier.padding(horizontal = 48.dp, vertical = 8.dp)
