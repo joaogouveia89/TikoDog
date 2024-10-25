@@ -1,10 +1,12 @@
 package io.github.joaogouveia89.tikodog.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import io.github.joaogouveia89.tikodog.dogSelection.presentation.DogPresentationScreen
+import io.github.joaogouveia89.tikodog.dogSelection.presentation.DogPresentationViewModel
 import io.github.joaogouveia89.tikodog.favorites.presentation.FavoritesScreen
 
 @Composable
@@ -14,6 +16,8 @@ fun NavigationGraph(navController: NavHostController) {
         startDestination = BottomNavItem.DogSelection.route
     ) {
         composable(BottomNavItem.DogSelection.route) {
+            val viewModel: DogPresentationViewModel = hiltViewModel()
+
             DogPresentationScreen(
                 isFavorite = false,
                 onBackClick = {},

@@ -14,7 +14,10 @@ class DogPresentationRepositoryImpl @Inject constructor(
 ): DogPresentationRepository {
     override fun getBreeds(): Flow<BreedListStatus> = flow {
         emit(BreedListStatus.Loading)
-        val breeds = dogPresentationSource.getBreeds()
+        val breeds = dogPresentationSource
+            .getBreeds()
+            .sorted()
+        // TODO instead of a list of strings, send the dog breed objects
         emit(BreedListStatus.Success(breeds))
     }.flowOn(Dispatchers.IO)
 }
