@@ -3,13 +3,13 @@ package io.github.joaogouveia89.tikodog.core.presentation.components
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,11 +46,11 @@ fun TikoDogTextInput(
             value = it
             onChangeValue(it)
         },
-        colors = OutlinedTextFieldDefaults.colors().copy(
-            unfocusedContainerColor = Color.Transparent,
-            focusedTextColor = Color.Black,
-            focusedIndicatorColor = Color.Black,
-            unfocusedIndicatorColor = borderColor // border color
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            backgroundColor = Color.Transparent,
+            textColor = Color.Black,
+            focusedBorderColor = Color.Black,
+            unfocusedBorderColor = borderColor
         ),
         shape = RoundedCornerShape(8.dp),
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
@@ -80,7 +80,7 @@ private fun TikoDogTextInputPreview() {
             label = "Name",
             hint = "Enter your name",
             onChangeValue = {},
-            borderColor = MaterialTheme.colorScheme.primary
+            borderColor = MaterialTheme.colors.primary
         )
     }
 }
@@ -98,7 +98,7 @@ private fun TikoDogTextInputWithIconPreview() {
                 contentDescription = null
             )
         },
-        borderColor = MaterialTheme.colorScheme.primary,
+        borderColor = MaterialTheme.colors.primary,
         onChangeValue = {}
     )
 }
