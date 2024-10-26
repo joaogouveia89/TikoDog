@@ -53,7 +53,7 @@ import io.github.joaogouveia89.tikodog.ui.theme.TikoPurple
 import io.github.joaogouveia89.tikodog.ui.theme.TikoYellow
 
 @Composable
-fun DogPresentationContent(
+fun DogSelectionContent(
     paddingValues: PaddingValues,
     isFavorite: Boolean,
     onDogBreedSelectClick: () -> Unit,

@@ -9,6 +9,6 @@ sealed class BreedListStatus {
     data class Success(val breeds: List<Breed>) : BreedListStatus()
 }
 
-interface DogPresentationRepository {
+interface DogSelectionRepository {
     fun getBreeds(): Flow<BreedListStatus>
 }

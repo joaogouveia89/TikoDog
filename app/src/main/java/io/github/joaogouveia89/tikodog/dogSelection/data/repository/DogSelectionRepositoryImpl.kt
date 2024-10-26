@@ -2,20 +2,20 @@ package io.github.joaogouveia89.tikodog.dogSelection.data.repository
 
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.BreedListStatus
-import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogPresentationRepository
-import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogPresentationSource
+import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogSelectionRepository
+import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogSelectionSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class DogPresentationRepositoryImpl @Inject constructor(
-    private val dogPresentationSource: DogPresentationSource
-): DogPresentationRepository {
+class DogSelectionRepositoryImpl @Inject constructor(
+    private val dogSelectionSource: DogSelectionSource
+): DogSelectionRepository {
     override fun getBreeds(): Flow<BreedListStatus> = flow {
         emit(BreedListStatus.Loading)
-        val breeds = dogPresentationSource
+        val breeds = dogSelectionSource
             .getBreeds()
             .sorted()
             .map {

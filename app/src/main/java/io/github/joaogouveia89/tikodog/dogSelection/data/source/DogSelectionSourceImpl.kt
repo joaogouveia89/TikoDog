@@ -1,12 +1,12 @@
 package io.github.joaogouveia89.tikodog.dogSelection.data.source
 
 import io.github.joaogouveia89.tikodog.core.data.remote.DogApiService
-import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogPresentationSource
+import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogSelectionSource
 import javax.inject.Inject
 
-class DogPresentationSourceImpl @Inject constructor(
+class DogSelectionSourceImpl @Inject constructor(
     private val dogApiService: DogApiService
-): DogPresentationSource {
+): DogSelectionSource {
     override suspend fun getBreeds(): List<String> {
         val response = dogApiService.getDogBreeds()
 

@@ -11,7 +11,7 @@ import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
 import io.github.joaogouveia89.tikodog.ui.theme.backgroundGradient
 
 @Composable
-fun DogPresentationScreen(
+fun DogSelectionScreen(
     isFavorite: Boolean,
     onBackClick: () -> Unit,
     onLogoutClick: () -> Unit,
@@ -29,7 +29,7 @@ fun DogPresentationScreen(
         },
         backgroundColor = Color.Transparent
     ) { paddingValues ->
-        DogPresentationContent(
+        DogSelectionContent(
             paddingValues,
             isFavorite,
             onDogBreedSelectClick,
@@ -41,9 +41,9 @@ fun DogPresentationScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun DogPresentationScreenPreview() {
+private fun DogSelectionScreenPreview() {
     TikoDogTheme {
-        DogPresentationScreen(
+        DogSelectionScreen(
             isFavorite = false,
             onBackClick = {},
             onLogoutClick = {},

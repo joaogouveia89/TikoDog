@@ -5,25 +5,25 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.joaogouveia89.tikodog.core.data.remote.DogApiService
-import io.github.joaogouveia89.tikodog.dogSelection.data.repository.DogPresentationRepositoryImpl
-import io.github.joaogouveia89.tikodog.dogSelection.data.source.DogPresentationSourceImpl
-import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogPresentationRepository
-import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogPresentationSource
+import io.github.joaogouveia89.tikodog.dogSelection.data.repository.DogSelectionRepositoryImpl
+import io.github.joaogouveia89.tikodog.dogSelection.data.source.DogSelectionSourceImpl
+import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogSelectionRepository
+import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogSelectionSource
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DogPresentationModule {
 
     @Provides
-    fun provideDogPresentationSource(
+    fun provideDogSelectionSource(
         dogApiService: DogApiService
-    ): DogPresentationSource =
-        DogPresentationSourceImpl(dogApiService)
+    ): DogSelectionSource =
+        DogSelectionSourceImpl(dogApiService)
 
     @Provides
     fun provideDogPresentationRepository(
-        dogPresentationSource: DogPresentationSource
-    ): DogPresentationRepository =
-        DogPresentationRepositoryImpl(dogPresentationSource)
+        dogSelectionSource: DogSelectionSource
+    ): DogSelectionRepository =
+        DogSelectionRepositoryImpl(dogSelectionSource)
 
 }
