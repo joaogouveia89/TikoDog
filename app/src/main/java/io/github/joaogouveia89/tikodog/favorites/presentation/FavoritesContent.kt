@@ -27,7 +27,6 @@ import io.github.joaogouveia89.tikodog.R
 import io.github.joaogouveia89.tikodog.core.presentation.components.PanelScreenHeader
 import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogPanelScreen
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
-import io.github.joaogouveia89.tikodog.dogSelection.presentation.DogPresentationImage
 
 @Composable
 fun FavoritesContent(
@@ -55,7 +54,6 @@ fun FavoritesContent(
         )
     }
 }
-
 
 
 @Composable

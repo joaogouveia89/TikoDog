@@ -11,12 +11,12 @@ sealed class BottomNavItem(
     data object DogSelection : BottomNavItem(
         title = "Selection",
         icon = R.drawable.ic_dog,
-        route = "dog_selection"
+        route = Routes.DOG_SELECTION
     )
 
     data object MyFavorites : BottomNavItem(
         title = "My Favorites",
         icon = R.drawable.ic_favorites,
-        route = "my_favorites"
+        route = Routes.MY_FAVORITES
     )
 }

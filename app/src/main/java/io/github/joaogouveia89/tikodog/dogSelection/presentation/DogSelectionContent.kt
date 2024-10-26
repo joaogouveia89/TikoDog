@@ -8,17 +8,23 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Autorenew
@@ -40,6 +46,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -47,6 +54,7 @@ import io.github.joaogouveia89.tikodog.R
 import io.github.joaogouveia89.tikodog.core.presentation.components.PanelScreenHeader
 import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogButton
 import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogPanelScreen
+import io.github.joaogouveia89.tikodog.dogSelection.presentation.state.DogSelectionUiState
 import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
 import io.github.joaogouveia89.tikodog.ui.theme.TikoGray2
 import io.github.joaogouveia89.tikodog.ui.theme.TikoPurple
@@ -54,44 +62,57 @@ import io.github.joaogouveia89.tikodog.ui.theme.TikoYellow
 
 @Composable
 fun DogSelectionContent(
+    modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
-    isFavorite: Boolean,
+    uiState: DogSelectionUiState,
+    onDogBreedSelected: (Int) -> Unit,
+    onShuffleClick: () -> Unit,
+    onFavoriteClick: () -> Unit
+) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        BreedSelectionDialog(
+            breeds = uiState.breedListStr,
+            onDismiss = { showDialog = false },
+            onBreedSelected = { index ->
+                showDialog = false
+                onDogBreedSelected(index) // Send selected index back
+            }
+        )
+    }
+
+    TikoDogPanelScreen(
+        modifier = Modifier
+            .padding(paddingValues)
+            .padding(top = 20.dp)
+            .fillMaxHeight()
+            .verticalScroll(rememberScrollState()),
+        header = PanelScreenHeader(
+            icon = ImageVector.vectorResource(id = R.drawable.ic_dog),
+            title = stringResource(R.string.dog_selection)
+        ),
+        content = {
+            PanelContent(
+                uiState = uiState,
+                onDogBreedSelectClick = { showDialog = true },
+                onShuffleClick = onShuffleClick,
+                onFavoriteClick = onFavoriteClick
+            )
+        }
+    )
+}
+
+@Composable
+private fun PanelContent(
+    uiState: DogSelectionUiState,
     onDogBreedSelectClick: () -> Unit,
     onShuffleClick: () -> Unit,
     onFavoriteClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
-            .padding(paddingValues)
-            .padding(top = 20.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
-        TikoDogPanelScreen(
-            header = PanelScreenHeader(
-                icon = ImageVector.vectorResource(id = R.drawable.ic_dog),
-                title = stringResource(R.string.dog_selection)
-            ),
-            content = {
-                PanelContent(
-                    isFavorite = isFavorite,
-                    onDogBreedSelectClick = onDogBreedSelectClick,
-                    onShuffleClick = onShuffleClick,
-                    onFavoriteClick = onFavoriteClick
-                )
-            }
-        )
-    }
-}
-
-@Composable
-private fun PanelContent(
-    isFavorite: Boolean,
-    onDogBreedSelectClick: () -> Unit,
-    onShuffleClick: () -> Unit,
-    onFavoriteClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier.padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp)
     ) {
         Text(
             text = stringResource(R.string.dog_breed),
@@ -99,17 +120,19 @@ private fun PanelContent(
         )
         TikoDogSelectDogBreed(
             modifier = Modifier.padding(top = 4.dp),
-            text = stringResource(R.string.select),
+            text = uiState.selectText ?: stringResource(R.string.loading),
             onSelectClick = onDogBreedSelectClick
         )
 
-        DogPresentationImage(
-            modifier = Modifier
-                .padding(top = 40.dp),
-            imageUrl = "",
-            isFavorite = isFavorite,
-            onFavoriteClick = onFavoriteClick
-        )
+        uiState.currentDog?.imageUrl?.let {
+            DogPresentationImage(
+                modifier = Modifier
+                    .padding(top = 40.dp),
+                imageUrl = it,
+                isFavorite = uiState.isFavorite,
+                onFavoriteClick = onFavoriteClick
+            )
+        }
 
         TikoDogButton(
             modifier = Modifier
@@ -222,6 +245,55 @@ fun DogPresentationImage(
                     )
                 }
             )
+        }
+    }
+}
+
+@Composable
+private fun BreedSelectionDialog(
+    breeds: List<String>,
+    onDismiss: () -> Unit,
+    onBreedSelected: (Int) -> Unit
+) {
+    Dialog(onDismissRequest = { onDismiss() }) {
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = MaterialTheme.colors.surface,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Column {
+                Text(
+                    text = "Select a Dog Breed",
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.padding(16.dp)
+                )
+
+                Divider()
+
+                LazyColumn {
+                    itemsIndexed(breeds) { index, breed ->
+                        Text(
+                            text = breed,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    onBreedSelected(index) // Pass the selected index
+                                }
+                                .padding(16.dp)
+                        )
+                        Divider()
+                    }
+                }
+
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(16.dp)
+                ) {
+                    Text("Cancel")
+                }
+            }
         }
     }
 }

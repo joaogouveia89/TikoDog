@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class DogSelectionRepositoryImpl @Inject constructor(
     private val dogSelectionSource: DogSelectionSource
-): DogSelectionRepository {
+) : DogSelectionRepository {
     override fun getBreeds(): Flow<BreedListStatus> = flow {
         emit(BreedListStatus.Loading)
         val breeds = dogSelectionSource
@@ -22,8 +22,8 @@ class DogSelectionRepositoryImpl @Inject constructor(
                 val breedAndSubBreed = it.split(" ")
                 Breed(
                     humanized = it.replaceFirstChar { char -> char.uppercase() },
-                    name = if(breedAndSubBreed.size == 1) breedAndSubBreed.first() else breedAndSubBreed.last(),
-                    subBreed = if(breedAndSubBreed.size == 1) null else breedAndSubBreed.first()
+                    name = if (breedAndSubBreed.size == 1) breedAndSubBreed.first() else breedAndSubBreed.last(),
+                    subBreed = if (breedAndSubBreed.size == 1) null else breedAndSubBreed.first()
                 )
             }
         emit(BreedListStatus.Success(breeds))

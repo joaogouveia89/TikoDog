@@ -5,7 +5,7 @@
     <string name="hide_password">Hide Password</string>
     <string name="dog_selection">Dog Selection</string>
     <string name="dog_breed">Dog Breed</string>
-    <string name="select">Select</string>
+    <string name="loading">Loading…</string>
     <string name="shuffle">Shuffle</string>
     <string name="my_favourite_dogs">My Favourite dogs</string>
 </resources>

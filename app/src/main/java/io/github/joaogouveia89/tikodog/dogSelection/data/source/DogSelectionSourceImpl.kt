@@ -6,18 +6,18 @@ import javax.inject.Inject
 
 class DogSelectionSourceImpl @Inject constructor(
     private val dogApiService: DogApiService
-): DogSelectionSource {
+) : DogSelectionSource {
     override suspend fun getBreeds(): List<String> {
         val response = dogApiService.getDogBreeds()
 
         return response
             .message
             .flatMap { (breed, subBreeds) ->
-            if (subBreeds.isEmpty()) {
-                listOf(breed)
-            } else {
-                subBreeds.map { subBreed -> "$subBreed $breed" }
+                if (subBreeds.isEmpty()) {
+                    listOf(breed)
+                } else {
+                    subBreeds.map { subBreed -> "$subBreed $breed" }
+                }
             }
-        }
     }
 }
