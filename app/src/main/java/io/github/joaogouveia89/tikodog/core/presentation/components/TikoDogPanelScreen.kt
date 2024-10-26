@@ -1,6 +1,7 @@
 package io.github.joaogouveia89.tikodog.core.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -27,11 +28,18 @@ fun TikoDogPanelScreen(
     header: PanelScreenHeader,
     content: @Composable () -> Unit
 ) {
-    Header(headerInfo = header)
-    ContentPanel(
-        modifier = modifier,
-        content = content
-    )
+    Column(
+        verticalArrangement = Arrangement.spacedBy(5.dp)
+    ){
+        Header(
+            headerInfo = header
+        )
+        ContentPanel(
+            modifier = modifier
+                .padding(top = 30.dp),
+            content = content
+        )
+    }
 }
 
 @Composable
@@ -41,7 +49,6 @@ private fun ContentPanel(
 ) {
     Column(
         modifier = modifier
-            .padding(top = 20.dp)
             .clip(
                 RoundedCornerShape(
                     topStart = 40.dp,

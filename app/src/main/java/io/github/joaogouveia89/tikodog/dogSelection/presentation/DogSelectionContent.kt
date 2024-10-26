@@ -207,7 +207,7 @@ fun DogPresentationImage(
                 println("Error loading image ${it.result.throwable}")
                 hasErrorOnImageLoading = true
             },
-            contentScale = ContentScale.FillHeight,
+            contentScale = ContentScale.Fit,
         )
 
         val icon = if (isFavorite)
