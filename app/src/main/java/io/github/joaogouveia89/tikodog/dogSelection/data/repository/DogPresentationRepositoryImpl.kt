@@ -1,5 +1,6 @@
 package io.github.joaogouveia89.tikodog.dogSelection.data.repository
 
+import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.BreedListStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogPresentationRepository
 import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogPresentationSource
@@ -17,7 +18,14 @@ class DogPresentationRepositoryImpl @Inject constructor(
         val breeds = dogPresentationSource
             .getBreeds()
             .sorted()
-        // TODO instead of a list of strings, send the dog breed objects
+            .map {
+                val breedAndSubBreed = it.split(" ")
+                Breed(
+                    humanized = it.replaceFirstChar { char -> char.uppercase() },
+                    name = if(breedAndSubBreed.size == 1) breedAndSubBreed.first() else breedAndSubBreed.last(),
+                    subBreed = if(breedAndSubBreed.size == 1) null else breedAndSubBreed.first()
+                )
+            }
         emit(BreedListStatus.Success(breeds))
     }.flowOn(Dispatchers.IO)
 }
