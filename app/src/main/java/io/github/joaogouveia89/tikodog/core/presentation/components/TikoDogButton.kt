@@ -27,10 +27,12 @@ fun TikoDogButton(
     trailIcon: ImageVector,
     containerColor: Color,
     contentColor: Color,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
         modifier = modifier,
+        enabled = enabled,
         shape = RoundedCornerShape(77.dp),
         content = {
             Row(

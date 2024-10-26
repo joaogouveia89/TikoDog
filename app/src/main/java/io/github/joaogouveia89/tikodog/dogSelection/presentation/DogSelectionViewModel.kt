@@ -3,6 +3,7 @@ package io.github.joaogouveia89.tikodog.dogSelection.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.BreedListStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogSelectionRepository
@@ -26,6 +27,8 @@ class DogSelectionViewModel @Inject constructor(
 ) : ViewModel() {
     private val breedFetchState = MutableStateFlow<BreedListStatus>(BreedListStatus.Idle)
 
+    private var breedList: List<Breed> = emptyList()
+
     private val _uiState = MutableStateFlow(DogSelectionUiState())
     val uiState = _uiState.stateIn(
         scope = viewModelScope,
@@ -37,12 +40,13 @@ class DogSelectionViewModel @Inject constructor(
         when (event) {
             is Event.OnDogBreedSelected -> {
                 _uiState.update { currentState ->
-                    val breed = currentState.breedList.getOrNull(event.index)
-                        ?: currentState.breedList.first()
+                    val breed = breedList.getOrNull(event.index)
+                        ?: breedList.first()
                     val dog = currentState.currentDog ?: Dog(breed)
                     currentState.copy(
                         currentDog = dog,
-                        selectText = breed.humanized
+                        selectText = breed.humanized,
+                        isShuffleEnabled = true
                     )
                 }
             }
@@ -57,20 +61,21 @@ class DogSelectionViewModel @Inject constructor(
                 when (status) {
                     is BreedListStatus.Success -> {
                         _uiState.update {
+                            breedList = status.breeds
                             DogSelectionUiState(
                                 isLoading = false,
-                                breedList = status.breeds,
-                                breedListStr = status.breeds.map { it.humanized },
-                                selectText = status.breeds.firstOrNull()?.humanized
+                                isShuffleEnabled = true,
+                                breedListStr = breedList.map { it.humanized },
+                                selectText = breedList.firstOrNull()?.humanized
                             )
                         }
-
                     }
 
                     is BreedListStatus.Loading -> {
                         _uiState.update {
                             DogSelectionUiState(
-                                isLoading = true
+                                isLoading = true,
+                                isShuffleEnabled = false
                             )
                         }
                     }

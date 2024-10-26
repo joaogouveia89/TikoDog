@@ -142,6 +142,7 @@ private fun PanelContent(
             trailIcon = Icons.Default.Autorenew,
             containerColor = TikoPurple,
             contentColor = Color.White,
+            enabled = uiState.isShuffleEnabled,
             onClick = onShuffleClick
         )
     }
