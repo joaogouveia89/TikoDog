@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -191,6 +192,7 @@ fun DogPresentationImage(
     ) {
         AsyncImage(
             modifier = Modifier
+                .fillMaxSize()
                 .clip(
                     RoundedCornerShape(16.dp)
                 ),
@@ -202,9 +204,10 @@ fun DogPresentationImage(
             error = painterResource(R.drawable.dog_scared),
             placeholder = painterResource(R.drawable.dog_thinking),
             onError = {
+                println("Error loading image ${it.result.throwable}")
                 hasErrorOnImageLoading = true
             },
-            contentScale = ContentScale.Fit,
+            contentScale = ContentScale.FillHeight,
         )
 
         val icon = if (isFavorite)

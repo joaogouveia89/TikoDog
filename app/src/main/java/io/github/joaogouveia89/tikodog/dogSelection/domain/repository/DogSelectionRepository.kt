@@ -9,6 +9,13 @@ sealed class BreedListStatus {
     data class Success(val breeds: List<Breed>) : BreedListStatus()
 }
 
+sealed class DogImageStatus {
+    data object Idle : DogImageStatus()
+    data object Loading : DogImageStatus()
+    data class Success(val dogImageUrl: String) : DogImageStatus()
+}
+
 interface DogSelectionRepository {
     fun getBreeds(): Flow<BreedListStatus>
+    suspend fun getDogImage(breed: Breed): Flow<DogImageStatus>
 }

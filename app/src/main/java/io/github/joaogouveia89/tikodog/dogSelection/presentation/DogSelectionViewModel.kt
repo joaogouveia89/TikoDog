@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.BreedListStatus
+import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogImageStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogSelectionRepository
 import io.github.joaogouveia89.tikodog.dogSelection.presentation.state.DogSelectionUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 sealed class Event {
     data class OnDogBreedSelected(val index: Int) : Event()
+    data object OnShuffleClick : Event()
 }
 
 @HiltViewModel
@@ -26,6 +28,7 @@ class DogSelectionViewModel @Inject constructor(
     private val dogSelectionRepository: DogSelectionRepository
 ) : ViewModel() {
     private val breedFetchState = MutableStateFlow<BreedListStatus>(BreedListStatus.Idle)
+    private val dogImageFetchState = MutableStateFlow<DogImageStatus>(DogImageStatus.Idle)
 
     private var breedList: List<Breed> = emptyList()
 
@@ -42,12 +45,20 @@ class DogSelectionViewModel @Inject constructor(
                 _uiState.update { currentState ->
                     val breed = breedList.getOrNull(event.index)
                         ?: breedList.first()
-                    val dog = currentState.currentDog ?: Dog(breed)
+                    val dog = currentState.currentDog?.copy(breed = breed) ?: Dog(breed = breed)
                     currentState.copy(
                         currentDog = dog,
                         selectText = breed.humanized,
                         isShuffleEnabled = true
                     )
+                }
+            }
+
+            Event.OnShuffleClick -> {
+                viewModelScope.launch {
+                    _uiState.value.currentDog?.let {
+                        dogImageFetchState.emitAll(dogSelectionRepository.getDogImage(it.breed))
+                    }
                 }
             }
         }
@@ -82,6 +93,22 @@ class DogSelectionViewModel @Inject constructor(
 
                     is BreedListStatus.Idle -> _uiState.update {
                         DogSelectionUiState()
+                    }
+                }
+
+                dogImageFetchState.collectLatest {
+                    when (it) {
+                        is DogImageStatus.Success -> {
+                            _uiState.update { currentState ->
+                                val currentDog = currentState.currentDog
+                                currentState.copy(
+                                    currentDog = currentDog?.copy(imageUrl = it.dogImageUrl),
+                                )
+                            }
+                        }
+
+                        DogImageStatus.Idle -> {}
+                        DogImageStatus.Loading -> {}
                     }
                 }
             }

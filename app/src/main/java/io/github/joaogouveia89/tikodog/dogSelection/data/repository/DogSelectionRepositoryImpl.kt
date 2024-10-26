@@ -2,6 +2,7 @@ package io.github.joaogouveia89.tikodog.dogSelection.data.repository
 
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.BreedListStatus
+import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogImageStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogSelectionRepository
 import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogSelectionSource
 import kotlinx.coroutines.Dispatchers
@@ -28,4 +29,10 @@ class DogSelectionRepositoryImpl @Inject constructor(
             }
         emit(BreedListStatus.Success(breeds))
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun getDogImage(breed: Breed): Flow<DogImageStatus> = flow {
+        emit(DogImageStatus.Loading)
+        val dogImageUrl = dogSelectionSource.getDogImage(breed)
+        emit(DogImageStatus.Success(dogImageUrl))
+    }
 }

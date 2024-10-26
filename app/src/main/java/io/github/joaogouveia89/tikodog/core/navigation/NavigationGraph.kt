@@ -27,7 +27,9 @@ fun NavigationGraph(navController: NavHostController) {
                 uiState = uiState,
                 onBackClick = {},
                 onLogoutClick = {},
-                onShuffleClick = {},
+                onShuffleClick = {
+                    viewModel.dispatch(Event.OnShuffleClick)
+                },
                 onDogBreedSelected = {
                     viewModel.dispatch(Event.OnDogBreedSelected(it))
                 },
