@@ -64,6 +64,7 @@ class DogSelectionViewModel @Inject constructor(
         }
     }
 
+    // FIXME: Create a shared view model to handle the list of breeds so it will be not necessary to recall it in every instance of this VM
     init {
         viewModelScope.launch {
             breedFetchState.emitAll(dogSelectionRepository.getBreeds())
