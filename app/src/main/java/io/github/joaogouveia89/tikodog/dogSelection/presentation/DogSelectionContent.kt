@@ -55,6 +55,7 @@ import io.github.joaogouveia89.tikodog.R
 import io.github.joaogouveia89.tikodog.core.presentation.components.PanelScreenHeader
 import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogButton
 import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogPanelScreen
+import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import io.github.joaogouveia89.tikodog.dogSelection.presentation.state.DogSelectionUiState
 import io.github.joaogouveia89.tikodog.ui.theme.TikoGray
 import io.github.joaogouveia89.tikodog.ui.theme.TikoGray2
@@ -63,12 +64,11 @@ import io.github.joaogouveia89.tikodog.ui.theme.TikoYellow
 
 @Composable
 fun DogSelectionContent(
-    modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
     uiState: DogSelectionUiState,
     onDogBreedSelected: (Int) -> Unit,
     onShuffleClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: (dog: Dog) -> Unit
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -109,7 +109,7 @@ private fun PanelContent(
     uiState: DogSelectionUiState,
     onDogBreedSelectClick: () -> Unit,
     onShuffleClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: (dog: Dog) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -131,7 +131,9 @@ private fun PanelContent(
                     .padding(top = 40.dp),
                 imageUrl = it,
                 isFavorite = uiState.isFavorite,
-                onFavoriteClick = onFavoriteClick
+                onFavoriteClick = {
+                    onFavoriteClick(uiState.currentDog)
+                }
             )
         }
 

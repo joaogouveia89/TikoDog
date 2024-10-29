@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.joaogouveia89.tikodog.core.presentation.TikoDogTopBar
+import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import io.github.joaogouveia89.tikodog.dogSelection.presentation.state.DogSelectionUiState
 import io.github.joaogouveia89.tikodog.ui.theme.TikoDogTheme
 import io.github.joaogouveia89.tikodog.ui.theme.backgroundGradient
@@ -19,7 +20,7 @@ fun DogSelectionScreen(
     onLogoutClick: () -> Unit,
     onDogBreedSelected: (Int) -> Unit,
     onShuffleClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: (dog: Dog) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.background(backgroundGradient),
@@ -32,8 +33,6 @@ fun DogSelectionScreen(
         backgroundColor = Color.Transparent
     ) { paddingValues ->
         DogSelectionContent(
-            modifier = Modifier
-                .fillMaxHeight(),
             paddingValues =
             paddingValues, uiState = uiState,
             onDogBreedSelected = onDogBreedSelected,
