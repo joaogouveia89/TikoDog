@@ -54,34 +54,47 @@ android {
 
 dependencies {
 
+    // AndroidX Core Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
+
+// Compose UI Libraries
+    implementation(platform(libs.compose.bom)) // BOM for Compose versioning
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material.icons.extended)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
-    implementation(libs.androidx.navigation.compose)
+
+// Image Loading Libraries
+    implementation(libs.coil.compose) // Coil for Compose image loading
+    implementation(libs.coil.network.okhttp) // Coil with OkHttp support
+
+// Navigation Library
+    implementation(libs.androidx.navigation.compose) // Compose navigation
+
+// Material Design Components
     implementation(libs.androidx.material)
 
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+// Dependency Injection with Hilt
+    implementation(libs.androidx.hilt.navigation.compose) // Hilt integration for Compose navigation
+    implementation(libs.hilt.android) // Hilt Android library
+    kapt(libs.hilt.compiler) // Hilt compiler for annotation processing
 
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
+// Networking Libraries
+    implementation(libs.retrofit) // Retrofit for networking
+    implementation(libs.converter.gson) // Gson converter for Retrofit
+    implementation(libs.okhttp) // OkHttp client
+    implementation(libs.logging.interceptor) // Logging interceptor for OkHttp
 
+// Testing Libraries
+    testImplementation(libs.junit) // Unit testing with JUnit
+    androidTestImplementation(libs.androidx.junit) // AndroidJUnit for instrumented tests
+    androidTestImplementation(libs.androidx.espresso.core) // Espresso for UI testing
+    androidTestImplementation(platform(libs.compose.bom)) // Compose BOM for tests
+    androidTestImplementation(libs.androidx.ui.test.junit4) // UI testing with Compose
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+// Debugging Libraries
+    debugImplementation(libs.androidx.ui.tooling) // UI tooling for debugging
+    debugImplementation(libs.androidx.ui.test.manifest) // Manifest testing for Compose
 }
