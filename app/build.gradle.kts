@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.com.google.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.room)
 }
 
 android {
@@ -49,6 +50,10 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
@@ -97,4 +102,9 @@ dependencies {
 // Debugging Libraries
     debugImplementation(libs.androidx.ui.tooling) // UI tooling for debugging
     debugImplementation(libs.androidx.ui.test.manifest) // Manifest testing for Compose
+
+//Room
+    implementation(libs.room) // Room runtime
+    kapt(libs.room.compiler)
+    implementation(libs.room.kotlincoroutines) // Room extensions
 }

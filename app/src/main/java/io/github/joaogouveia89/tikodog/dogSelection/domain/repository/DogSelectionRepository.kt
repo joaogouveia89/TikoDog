@@ -16,6 +16,6 @@ sealed class DogImageStatus {
 }
 
 interface DogSelectionRepository {
-    fun getBreeds(): Flow<BreedListStatus>
+    fun getBreeds(updateLocalDb: Boolean = false): Flow<BreedListStatus>
     suspend fun getDogImage(breed: Breed): Flow<DogImageStatus>
 }

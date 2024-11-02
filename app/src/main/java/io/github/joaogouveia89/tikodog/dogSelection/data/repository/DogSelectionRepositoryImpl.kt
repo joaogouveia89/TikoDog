@@ -12,27 +12,20 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class DogSelectionRepositoryImpl @Inject constructor(
-    private val dogSelectionSource: DogSelectionSource
+    private val remoteSource: DogSelectionSource,
+    private val localSource: DogSelectionSource
 ) : DogSelectionRepository {
-    override fun getBreeds(): Flow<BreedListStatus> = flow {
+    override fun getBreeds(updateLocalDb: Boolean): Flow<BreedListStatus> = flow {
         emit(BreedListStatus.Loading)
-        val breeds = dogSelectionSource
+        val breeds = remoteSource
             .getBreeds()
-            .sorted()
-            .map {
-                val breedAndSubBreed = it.split(" ")
-                Breed(
-                    humanized = it.replaceFirstChar { char -> char.uppercase() },
-                    name = if (breedAndSubBreed.size == 1) breedAndSubBreed.first() else breedAndSubBreed.last(),
-                    subBreed = if (breedAndSubBreed.size == 1) null else breedAndSubBreed.first()
-                )
-            }
+            .sortedBy { it.humanized }
         emit(BreedListStatus.Success(breeds))
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getDogImage(breed: Breed): Flow<DogImageStatus> = flow {
         emit(DogImageStatus.Loading)
-        val dogImageUrl = dogSelectionSource.getDogImage(breed)
+        val dogImageUrl = remoteSource.getDogImage(breed)
         emit(DogImageStatus.Success(dogImageUrl))
     }
 }

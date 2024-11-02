@@ -1,23 +1,35 @@
 package io.github.joaogouveia89.tikodog.dogSelection.data.source
 
 import io.github.joaogouveia89.tikodog.core.data.remote.DogApiService
+import io.github.joaogouveia89.tikodog.core.ktx.humanized
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogSelectionSource
 import javax.inject.Inject
 
-class DogSelectionSourceImpl @Inject constructor(
+class DogSelectionRemoteSourceImpl @Inject constructor(
     private val dogApiService: DogApiService
 ) : DogSelectionSource {
-    override suspend fun getBreeds(): List<String> {
+    override suspend fun getBreeds(): List<Breed> {
         val response = dogApiService.getDogBreeds()
 
         return response
             .message
             .flatMap { (breed, subBreeds) ->
                 if (subBreeds.isEmpty()) {
-                    listOf(breed)
+                    listOf(
+                        Breed(
+                        name = breed,
+                        subBreed = null,
+                        humanized = breed
+                    ))
                 } else {
-                    subBreeds.map { subBreed -> "$subBreed $breed" }
+                    subBreeds.map { subBreed ->
+                        Breed(
+                            name = breed,
+                            subBreed = subBreed,
+                            humanized = "$subBreed $breed".humanized()
+                        )
+                    }
                 }
             }
     }
