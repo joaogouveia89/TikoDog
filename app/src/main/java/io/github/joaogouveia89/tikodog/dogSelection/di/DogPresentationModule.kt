@@ -1,5 +1,6 @@
 package io.github.joaogouveia89.tikodog.dogSelection.di
 
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,8 +32,9 @@ object DogPresentationModule {
     @Provides
     fun provideDogPresentationRepository(
         @RemoteDogSelectionSource remoteSource: DogSelectionSource,
-        @LocalDogSelectionSource localSource: DogSelectionSource
+        @LocalDogSelectionSource localSource: DogSelectionSource,
+        preferences: SharedPreferences
     ): DogSelectionRepository =
-        DogSelectionRepositoryImpl(remoteSource, localSource)
+        DogSelectionRepositoryImpl(remoteSource, localSource, preferences)
 
 }

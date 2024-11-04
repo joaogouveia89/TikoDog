@@ -107,4 +107,7 @@ dependencies {
     implementation(libs.room) // Room runtime
     kapt(libs.room.compiler)
     implementation(libs.room.kotlincoroutines) // Room extensions
+
+// Kotlinx date time
+    implementation(libs.kotlinx.datetime)
 }
