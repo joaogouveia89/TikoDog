@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.joaogouveia89.tikodog.core.data.local.dao.BreedDao
+import io.github.joaogouveia89.tikodog.core.data.local.dao.DogDao
 import io.github.joaogouveia89.tikodog.core.data.remote.DogApiService
 import io.github.joaogouveia89.tikodog.dogSelection.data.repository.DogSelectionRepositoryImpl
 import io.github.joaogouveia89.tikodog.dogSelection.data.source.DogSelectionLocalSourceImpl
@@ -26,8 +27,9 @@ object DogPresentationModule {
     @LocalDogSelectionSource
     @Provides
     fun provideLocalDogSelectionSource(
-        breedDao: BreedDao
-    ): DogSelectionSource = DogSelectionLocalSourceImpl(breedDao)
+        breedDao: BreedDao,
+        dogDao: DogDao
+    ): DogSelectionSource = DogSelectionLocalSourceImpl(breedDao, dogDao)
 
     @Provides
     fun provideDogPresentationRepository(

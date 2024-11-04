@@ -1,11 +1,14 @@
 package io.github.joaogouveia89.tikodog.dogSelection.data.repository
 
 import android.content.SharedPreferences
+import android.util.Log
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
+import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import io.github.joaogouveia89.tikodog.dogSelection.data.source.DogSelectionLocalSourceImpl
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.BreedListStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogImageStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogSelectionRepository
+import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.FavoriteStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogSelectionSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +30,7 @@ class DogSelectionRepositoryImpl @Inject constructor(
     private val localSource: DogSelectionSource,
     private val preferences: SharedPreferences
 ) : DogSelectionRepository {
-    override fun getBreeds(): Flow<BreedListStatus> = flow {
+    override suspend fun getBreeds(): Flow<BreedListStatus> = flow {
         emit(BreedListStatus.Loading)
         if (shouldUpdateLocalDb()) {
             val breeds = remoteSource
@@ -50,7 +53,15 @@ class DogSelectionRepositoryImpl @Inject constructor(
         emit(DogImageStatus.Loading)
         val dogImageUrl = remoteSource.getDogImage(breed)
         emit(DogImageStatus.Success(dogImageUrl))
-    }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun addRemoveFromFavorites(dog: Dog): Flow<FavoriteStatus> = flow {
+        emit(FavoriteStatus.Loading)
+        val localSourceImpl = localSource as DogSelectionLocalSourceImpl
+        localSourceImpl.removeDogFavorite(dog)
+        localSourceImpl.addDogToFavorite(dog)
+        emit(FavoriteStatus.Success)
+    }.flowOn(Dispatchers.IO)
 
     private fun shouldUpdateLocalDb(): Boolean {
         val lastTimeUpdated =

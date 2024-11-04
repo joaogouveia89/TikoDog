@@ -2,12 +2,14 @@ package io.github.joaogouveia89.tikodog.dogSelection.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.BreedListStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogImageStatus
 import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.DogSelectionRepository
+import io.github.joaogouveia89.tikodog.dogSelection.domain.repository.FavoriteStatus
 import io.github.joaogouveia89.tikodog.dogSelection.presentation.state.DogSelectionUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
@@ -21,6 +23,7 @@ import javax.inject.Inject
 sealed class Event {
     data class OnDogBreedSelected(val index: Int) : Event()
     data object OnShuffleClick : Event()
+    data class OnFavoriteClick(val dog: Dog): Event()
 }
 
 @HiltViewModel
@@ -29,6 +32,7 @@ class DogSelectionViewModel @Inject constructor(
 ) : ViewModel() {
     private val breedFetchState = MutableStateFlow<BreedListStatus>(BreedListStatus.Idle)
     private val dogImageFetchState = MutableStateFlow<DogImageStatus>(DogImageStatus.Idle)
+    private val addRemoveToFavoritesState = MutableStateFlow<FavoriteStatus>(FavoriteStatus.Idle)
 
     private var breedList: List<Breed> = emptyList()
 
@@ -59,6 +63,12 @@ class DogSelectionViewModel @Inject constructor(
                     _uiState.value.currentDog?.let {
                         dogImageFetchState.emitAll(dogSelectionRepository.getDogImage(it.breed))
                     }
+                }
+            }
+
+            is Event.OnFavoriteClick -> {
+                viewModelScope.launch {
+                    addRemoveToFavoritesState.emitAll(dogSelectionRepository.addRemoveFromFavorites(event.dog))
                 }
             }
         }
@@ -107,9 +117,16 @@ class DogSelectionViewModel @Inject constructor(
                                 )
                             }
                         }
-
                         DogImageStatus.Idle -> {}
                         DogImageStatus.Loading -> {}
+                    }
+                }
+
+                addRemoveToFavoritesState.collectLatest {
+                    when(it) {
+                        FavoriteStatus.Idle -> TODO()
+                        FavoriteStatus.Loading -> TODO()
+                        FavoriteStatus.Success -> TODO()
                     }
                 }
             }

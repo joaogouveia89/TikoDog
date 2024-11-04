@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.joaogouveia89.tikodog.core.data.local.TikoDogDatabase
 import io.github.joaogouveia89.tikodog.core.data.local.dao.BreedDao
+import io.github.joaogouveia89.tikodog.core.data.local.dao.DogDao
 import javax.inject.Singleton
 
 private const val TIKO_DOG_DATABASE_NAME = "tiko_dog_db"
@@ -31,4 +32,10 @@ object RoomModule {
     fun provideBreedDao(
         database: TikoDogDatabase
     ): BreedDao = database.breedDao()
+
+    @Provides
+    @Singleton
+    fun provideDogDao(
+        database: TikoDogDatabase
+    ): DogDao = database.dogDao()
 }

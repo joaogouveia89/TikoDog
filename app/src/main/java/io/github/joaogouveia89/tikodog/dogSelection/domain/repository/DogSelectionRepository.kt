@@ -1,6 +1,7 @@
 package io.github.joaogouveia89.tikodog.dogSelection.domain.repository
 
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
+import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import kotlinx.coroutines.flow.Flow
 
 sealed class BreedListStatus {
@@ -15,7 +16,14 @@ sealed class DogImageStatus {
     data class Success(val dogImageUrl: String) : DogImageStatus()
 }
 
+sealed class FavoriteStatus {
+    data object Idle : FavoriteStatus()
+    data object Loading : FavoriteStatus()
+    data object Success : FavoriteStatus()
+}
+
 interface DogSelectionRepository {
-    fun getBreeds(): Flow<BreedListStatus>
+    suspend fun getBreeds(): Flow<BreedListStatus>
     suspend fun getDogImage(breed: Breed): Flow<DogImageStatus>
+    suspend fun addRemoveFromFavorites(dog: Dog): Flow<FavoriteStatus>
 }

@@ -34,7 +34,7 @@ fun NavigationGraph(navController: NavHostController) {
                     viewModel.dispatch(Event.OnDogBreedSelected(it))
                 },
                 onFavoriteClick = {
-                    println("FAVORITE CLICKED $it")
+                    viewModel.dispatch(Event.OnFavoriteClick(it))
                 }
             )
         }

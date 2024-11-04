@@ -5,6 +5,7 @@ import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 
 fun BreedEntity.asBreedModel(): Breed =
     Breed(
+        id = id,
         name = name,
         subBreed = subBreed,
         humanized = humanized
