@@ -19,7 +19,7 @@ sealed class DogImageStatus {
 sealed class FavoriteStatus {
     data object Idle : FavoriteStatus()
     data object Loading : FavoriteStatus()
-    data object Success : FavoriteStatus()
+    data class Success(val dog: Dog) : FavoriteStatus()
 }
 
 interface DogSelectionRepository {

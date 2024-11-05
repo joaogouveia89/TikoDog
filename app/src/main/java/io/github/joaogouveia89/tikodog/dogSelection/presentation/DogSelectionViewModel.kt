@@ -1,8 +1,8 @@
 package io.github.joaogouveia89.tikodog.dogSelection.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
@@ -78,7 +78,9 @@ class DogSelectionViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             breedFetchState.emitAll(dogSelectionRepository.getBreeds())
+        }
 
+        viewModelScope.launch {
             breedFetchState.collectLatest { status ->
                 when (status) {
                     is BreedListStatus.Success -> {
@@ -106,27 +108,69 @@ class DogSelectionViewModel @Inject constructor(
                         DogSelectionUiState()
                     }
                 }
+            }
+        }
 
-                dogImageFetchState.collectLatest {
-                    when (it) {
-                        is DogImageStatus.Success -> {
-                            _uiState.update { currentState ->
-                                val currentDog = currentState.currentDog
-                                currentState.copy(
-                                    currentDog = currentDog?.copy(imageUrl = it.dogImageUrl),
-                                )
-                            }
+        viewModelScope.launch {
+            breedFetchState.collectLatest { status ->
+                when (status) {
+                    is BreedListStatus.Success -> {
+                        _uiState.update {
+                            breedList = status.breeds
+                            DogSelectionUiState(
+                                isLoading = false,
+                                isShuffleEnabled = true,
+                                breedListStr = breedList.map { it.humanized },
+                                selectText = breedList.firstOrNull()?.humanized
+                            )
                         }
-                        DogImageStatus.Idle -> {}
-                        DogImageStatus.Loading -> {}
+                    }
+
+                    is BreedListStatus.Loading -> {
+                        _uiState.update {
+                            DogSelectionUiState(
+                                isLoading = true,
+                                isShuffleEnabled = false
+                            )
+                        }
+                    }
+
+                    is BreedListStatus.Idle -> _uiState.update {
+                        DogSelectionUiState()
                     }
                 }
+            }
+        }
+        viewModelScope.launch {
+            dogImageFetchState.collectLatest {
+                when (it) {
+                    is DogImageStatus.Success -> {
+                        _uiState.update { currentState ->
+                            val currentDog = currentState.currentDog
+                            currentState.copy(
+                                currentDog = currentDog?.copy(imageUrl = it.dogImageUrl),
+                            )
+                        }
+                    }
 
-                addRemoveToFavoritesState.collectLatest {
-                    when(it) {
-                        FavoriteStatus.Idle -> TODO()
-                        FavoriteStatus.Loading -> TODO()
-                        FavoriteStatus.Success -> TODO()
+                    DogImageStatus.Idle -> {}
+                    DogImageStatus.Loading -> {}
+                }
+            }
+        }
+        viewModelScope.launch {
+            addRemoveToFavoritesState.collectLatest { it ->
+                when (it) {
+                    FavoriteStatus.Idle -> {}
+                    FavoriteStatus.Loading -> { }
+
+                    is FavoriteStatus.Success -> {
+                        _uiState.update { state ->
+                            state.copy(
+                                isFavorite = it.dog.id != 0L,
+                                currentDog = it.dog
+                            )
+                        }
                     }
                 }
             }

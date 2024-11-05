@@ -12,7 +12,7 @@ interface DogDao {
     @Insert(
         onConflict = OnConflictStrategy.IGNORE
     )
-    suspend fun insert(dogEntity: DogEntity)
+    suspend fun insert(dogEntity: DogEntity): Long
 
     @Delete
     suspend fun delete(dogEntity: DogEntity)
@@ -20,6 +20,6 @@ interface DogDao {
     @Query("SELECT * FROM Dog")
     suspend fun getAll(): List<DogEntity>
 
-    @Query("SELECT COUNT(*) FROM Dog WHERE breedId = :breedId AND imageUrl = :imageUrl")
-    suspend fun registersCount(breedId: Long, imageUrl: String): Int
+    @Query("SELECT COUNT(*) FROM Dog WHERE imageUrl = :imageUrl")
+    suspend fun registersCount(imageUrl: String): Int
 }

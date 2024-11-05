@@ -1,7 +1,6 @@
 package io.github.joaogouveia89.tikodog.dogSelection.data.repository
 
 import android.content.SharedPreferences
-import android.util.Log
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 import io.github.joaogouveia89.tikodog.dogSelection.data.source.DogSelectionLocalSourceImpl
@@ -33,20 +32,19 @@ class DogSelectionRepositoryImpl @Inject constructor(
     override suspend fun getBreeds(): Flow<BreedListStatus> = flow {
         emit(BreedListStatus.Loading)
         if (shouldUpdateLocalDb()) {
-            val breeds = remoteSource
+            val remoteBreeds = remoteSource
                 .getBreeds()
                 .sortedBy { it.humanized }
 
             val localSourceImpl = localSource as DogSelectionLocalSourceImpl
-            localSourceImpl.updateBreeds(breeds)
-            emit(BreedListStatus.Success(breeds))
-        } else {
-            val breeds = localSource
-                .getBreeds()
-                .sortedBy { it.humanized }
 
-            emit(BreedListStatus.Success(breeds))
+            localSourceImpl.updateBreeds(remoteBreeds)
         }
+        val breeds = localSource
+            .getBreeds()
+            .sortedBy { it.humanized }
+
+        emit(BreedListStatus.Success(breeds))
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getDogImage(breed: Breed): Flow<DogImageStatus> = flow {
@@ -54,13 +52,24 @@ class DogSelectionRepositoryImpl @Inject constructor(
         val dogImageUrl = remoteSource.getDogImage(breed)
         emit(DogImageStatus.Success(dogImageUrl))
     }.flowOn(Dispatchers.IO)
-
     override suspend fun addRemoveFromFavorites(dog: Dog): Flow<FavoriteStatus> = flow {
         emit(FavoriteStatus.Loading)
         val localSourceImpl = localSource as DogSelectionLocalSourceImpl
-        localSourceImpl.removeDogFavorite(dog)
-        localSourceImpl.addDogToFavorite(dog)
-        emit(FavoriteStatus.Success)
+
+        var opId = 0L
+
+        val isFavorite = localSourceImpl.isDogExist(dog)
+        if (isFavorite) {
+            localSourceImpl.removeDogFavorite(dog)
+        } else {
+            opId = localSourceImpl.addDogToFavorite(dog)
+        }
+
+        emit(
+            FavoriteStatus.Success(
+                dog.copy(id = opId)
+            )
+        )
     }.flowOn(Dispatchers.IO)
 
     private fun shouldUpdateLocalDb(): Boolean {

@@ -25,9 +25,8 @@ class DogSelectionLocalSourceImpl @Inject constructor(
         return ""
     }
 
-    suspend fun addDogToFavorite(dog: Dog){
+    suspend fun addDogToFavorite(dog: Dog): Long =
         dogDao.insert(dog.asDogEntity())
-    }
 
     suspend fun removeDogFavorite(dog: Dog){
         dogDao.delete(dog.asDogEntity())
@@ -44,5 +43,12 @@ class DogSelectionLocalSourceImpl @Inject constructor(
         val breeds = breedDao.getAll()
 
         return dogs.asDogModels(breeds)
+    }
+
+    suspend fun isDogExist(dog: Dog): Boolean{
+        dog.imageUrl?.let {
+             return dogDao.registersCount(it) > 0
+        }
+        return false
     }
 }
