@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.github.joaogouveia89.tikodog.core.data.local.entity.DogEntity
+import io.github.joaogouveia89.tikodog.core.data.local.entity.relation.DogWithBreed
 
 @Dao
 interface DogDao {
@@ -18,7 +19,7 @@ interface DogDao {
     suspend fun delete(dogEntity: DogEntity)
 
     @Query("SELECT * FROM Dog")
-    suspend fun getAll(): List<DogEntity>
+    suspend fun getAll(): List<DogWithBreed>
 
     @Query("SELECT COUNT(*) FROM Dog WHERE imageUrl = :imageUrl")
     suspend fun registersCount(imageUrl: String): Int

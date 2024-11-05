@@ -52,6 +52,7 @@ class DogSelectionRepositoryImpl @Inject constructor(
         val dogImageUrl = remoteSource.getDogImage(breed)
         emit(DogImageStatus.Success(dogImageUrl))
     }.flowOn(Dispatchers.IO)
+
     override suspend fun addRemoveFromFavorites(dog: Dog): Flow<FavoriteStatus> = flow {
         emit(FavoriteStatus.Loading)
         val localSourceImpl = localSource as DogSelectionLocalSourceImpl

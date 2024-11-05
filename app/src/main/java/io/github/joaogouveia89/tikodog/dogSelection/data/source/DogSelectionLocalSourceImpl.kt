@@ -40,9 +40,8 @@ class DogSelectionLocalSourceImpl @Inject constructor(
     suspend fun getDogs(): List<Dog>{
         val dogs = dogDao
             .getAll()
-        val breeds = breedDao.getAll()
 
-        return dogs.asDogModels(breeds)
+        return dogs.asDogModels()
     }
 
     suspend fun isDogExist(dog: Dog): Boolean{

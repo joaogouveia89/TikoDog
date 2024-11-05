@@ -1,17 +1,16 @@
 package io.github.joaogouveia89.tikodog.core.ktx
 
-import io.github.joaogouveia89.tikodog.core.data.local.entity.BreedEntity
-import io.github.joaogouveia89.tikodog.core.data.local.entity.DogEntity
+import io.github.joaogouveia89.tikodog.core.data.local.entity.relation.DogWithBreed
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
 
-fun DogEntity.asDogModel(breed: BreedEntity): Dog =
+fun DogWithBreed.asDogModel(): Dog =
     Dog(
-        id = id,
+        id = dog.id,
         breed = breed.asBreedModel(),
-        imageUrl = imageUrl
+        imageUrl = dog.imageUrl
     )
 
-fun List<DogEntity>.asDogModels(breeds: List<BreedEntity>) =
+fun List<DogWithBreed>.asDogModels() =
     map { dogEntity ->
-        dogEntity.asDogModel(breeds.first { it.id == dogEntity.breedId })
+        dogEntity.asDogModel()
     }
