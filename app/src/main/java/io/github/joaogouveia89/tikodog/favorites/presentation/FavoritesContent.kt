@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,15 +43,11 @@ fun FavoritesContent(
                 title = stringResource(R.string.my_favourite_dogs)
             ),
             content = {
-                Column(
-                    modifier = Modifier
-                        .padding(20.dp)
-                ) {
-                    PanelContent(
-                        favoriteDogs = uiState.dogs
-                    )
-                }
+                PanelContent(
+                    favoriteDogs = uiState.dogs
+                )
             }
+
         )
     }
 }
@@ -62,8 +59,8 @@ private fun PanelContent(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-        verticalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
+        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
         modifier = Modifier.fillMaxSize()
     ) {
         items(favoriteDogs.size) { index ->
@@ -78,12 +75,12 @@ private fun PanelContent(
 private fun FavoriteDogItem(
     dog: Dog,
 ) {
-
     AsyncImage(
         modifier = Modifier
             .clip(
                 RoundedCornerShape(16.dp)
-            ),
+            )
+            .size(170.dp, 110.dp),
         model = ImageRequest.Builder(LocalContext.current)
             .data(dog.imageUrl)
             .crossfade(true)
@@ -91,6 +88,6 @@ private fun FavoriteDogItem(
         contentDescription = null,
         error = painterResource(R.drawable.dog_scared),
         placeholder = painterResource(R.drawable.dog_thinking),
-        contentScale = ContentScale.Fit,
+        contentScale = ContentScale.Crop,
     )
 }
