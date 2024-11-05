@@ -11,6 +11,7 @@ import io.github.joaogouveia89.tikodog.dogSelection.presentation.DogSelectionScr
 import io.github.joaogouveia89.tikodog.dogSelection.presentation.DogSelectionViewModel
 import io.github.joaogouveia89.tikodog.dogSelection.presentation.Event
 import io.github.joaogouveia89.tikodog.favorites.presentation.FavoritesScreen
+import io.github.joaogouveia89.tikodog.favorites.presentation.FavoritesViewModel
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
@@ -40,10 +41,14 @@ fun NavigationGraph(navController: NavHostController) {
         }
 
         composable(BottomNavItem.MyFavorites.route) {
+            val viewModel: FavoritesViewModel = hiltViewModel()
+
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
             FavoritesScreen(
+                uiState = uiState,
                 onBackClick = { },
-                onLogoutClick = {},
-                onDogClicked = {}
+                onLogoutClick = {}
             )
         }
     }

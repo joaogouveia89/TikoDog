@@ -1,6 +1,5 @@
 package io.github.joaogouveia89.tikodog.favorites.presentation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,11 +26,12 @@ import io.github.joaogouveia89.tikodog.R
 import io.github.joaogouveia89.tikodog.core.presentation.components.PanelScreenHeader
 import io.github.joaogouveia89.tikodog.core.presentation.components.TikoDogPanelScreen
 import io.github.joaogouveia89.tikodog.core.presentation.model.Dog
+import io.github.joaogouveia89.tikodog.favorites.presentation.state.FavoritesUiState
 
 @Composable
 fun FavoritesContent(
-    paddingValues: PaddingValues,
-    onDogClicked: (dog: Dog) -> Unit
+    uiState: FavoritesUiState,
+    paddingValues: PaddingValues
 ) {
     Column(
         modifier = Modifier.padding(paddingValues)
@@ -47,7 +47,7 @@ fun FavoritesContent(
                         .padding(20.dp)
                 ) {
                     PanelContent(
-                        onDogClicked = onDogClicked
+                        favoriteDogs = uiState.dogs
                     )
                 }
             }
@@ -58,8 +58,7 @@ fun FavoritesContent(
 
 @Composable
 private fun PanelContent(
-    favoriteDogs: List<Dog> = emptyList(),
-    onDogClicked: (dog: Dog) -> Unit
+    favoriteDogs: List<Dog>
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -70,7 +69,6 @@ private fun PanelContent(
         items(favoriteDogs.size) { index ->
             FavoriteDogItem(
                 dog = favoriteDogs[index],
-                onDogClicked = onDogClicked
             )
         }
     }
@@ -79,15 +77,13 @@ private fun PanelContent(
 @Composable
 private fun FavoriteDogItem(
     dog: Dog,
-    onDogClicked: (dog: Dog) -> Unit
 ) {
 
     AsyncImage(
         modifier = Modifier
             .clip(
                 RoundedCornerShape(16.dp)
-            )
-            .clickable { onDogClicked(dog) },
+            ),
         model = ImageRequest.Builder(LocalContext.current)
             .data(dog.imageUrl)
             .crossfade(true)
