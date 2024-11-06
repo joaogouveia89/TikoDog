@@ -11,17 +11,21 @@ An Android application that fetches random dog images from the [Dog CEO API](htt
 ## Screenshots
 
 ### Dog Selection Screen
-<!-- ![Dog Selection Screen](path/to/dog_selection_screen.png) -->
+![Dog Selection Screen](selection_scr.png)
 
 ### Favorites Screen
-<!-- ![Favorites Screen](path/to/favorites_screen.png) -->
+![Favorites Screen](favorites_scr.png)
 
 ## Future Improvements
 
-- **Login Integration**: Implement user authentication, allowing users to log in and save their preferences across devices.
-- **Enhanced Offline Mode**: Improve the offline functionality by caching more images and data.
-- **Dark Mode**: Add support for dark mode to enhance the app's usability in low-light environments.
+- **Login Integration**: Implement user authentication, allowing users to log in and save their preferences across devices using Firebase SDK.
+- **Loading state**: Handle loading state for more scenarios
+- **Enhanced Offline Mode**: Improve the offline functionality by caching images.
 - **Breed Filters and Sorting**: Add filters and sorting options, enabling users to browse dogs by breed, size, and other characteristics.
+
+## Known Bugs
+
+- On selection screen when clicking to add or remove to favorite the image is resizing for some reason
 
 ## Getting Started
 
