@@ -1,7 +1,7 @@
-package io.github.joaogouveia89.tikodog.core.data.remote
+package io.github.joaogouveia89.tikodog.core.data.remote.api
 
-import io.github.joaogouveia89.tikodog.core.data.remote.response.DogBreedsResponse
-import io.github.joaogouveia89.tikodog.core.data.remote.response.DogImageResponse
+import io.github.joaogouveia89.tikodog.core.data.remote.api.response.DogBreedsResponse
+import io.github.joaogouveia89.tikodog.core.data.remote.api.response.DogImageResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

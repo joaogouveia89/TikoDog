@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.joaogouveia89.tikodog.core.data.local.dao.BreedDao
 import io.github.joaogouveia89.tikodog.core.data.local.dao.DogDao
-import io.github.joaogouveia89.tikodog.core.data.remote.DogApiService
+import io.github.joaogouveia89.tikodog.core.data.remote.api.DogApiService
 import io.github.joaogouveia89.tikodog.dogSelection.data.repository.DogSelectionRepositoryImpl
 import io.github.joaogouveia89.tikodog.dogSelection.data.source.DogSelectionLocalSourceImpl
 import io.github.joaogouveia89.tikodog.dogSelection.data.source.DogSelectionRemoteSourceImpl

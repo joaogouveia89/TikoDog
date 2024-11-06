@@ -71,6 +71,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material.icons.extended)
 
+// Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
 // Image Loading Libraries
     implementation(libs.coil.compose) // Coil for Compose image loading
     implementation(libs.coil.network.okhttp) // Coil with OkHttp support

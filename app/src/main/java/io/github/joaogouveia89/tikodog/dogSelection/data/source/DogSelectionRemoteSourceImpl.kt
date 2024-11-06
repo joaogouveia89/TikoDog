@@ -1,6 +1,6 @@
 package io.github.joaogouveia89.tikodog.dogSelection.data.source
 
-import io.github.joaogouveia89.tikodog.core.data.remote.DogApiService
+import io.github.joaogouveia89.tikodog.core.data.remote.api.DogApiService
 import io.github.joaogouveia89.tikodog.core.ktx.humanized
 import io.github.joaogouveia89.tikodog.core.presentation.model.Breed
 import io.github.joaogouveia89.tikodog.dogSelection.domain.source.DogSelectionSource

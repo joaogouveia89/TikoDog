@@ -1,4 +1,4 @@
-package io.github.joaogouveia89.tikodog.core.data.remote.response
+package io.github.joaogouveia89.tikodog.core.data.remote.api.response
 
 import com.google.gson.annotations.SerializedName
 

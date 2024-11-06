@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.joaogouveia89.tikodog.BuildConfig
-import io.github.joaogouveia89.tikodog.core.data.remote.DogApiService
+import io.github.joaogouveia89.tikodog.core.data.remote.api.DogApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
